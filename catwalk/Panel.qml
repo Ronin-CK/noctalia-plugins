@@ -64,7 +64,7 @@ Item {
                     ]
 
                     Timer {
-                        interval: SystemStatService.cpuUsage > 90 ? 30 : (SystemStatService.cpuUsage > 50 ? 80 : 150)
+                        interval: Math.max(30, 200 - SystemStatService.cpuUsage * 1.7)
                         running: bigCatItem.isRunning && SystemStatService.cpuUsage >= 10
                         repeat: true
                         onTriggered: bigCatItem.frameIndex = (bigCatItem.frameIndex + 1) % bigCatItem.icons.length

@@ -86,7 +86,7 @@ Rectangle {
     property real cpuUsage: SystemStatService.cpuUsage
 
     Timer {
-        interval: root.cpuUsage > 90 ? 30 : (root.cpuUsage > 50 ? 80 : 150)
+        interval: Math.max(30, 200 - root.cpuUsage * 1.7)
         running: root.isRunning && root.cpuUsage >= 10
         repeat: true
         onTriggered: {
