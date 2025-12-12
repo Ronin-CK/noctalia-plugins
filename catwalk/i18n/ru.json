@@ -1,0 +1,18 @@
+{
+  "tooltip": {
+    "running": "Кот бежит",
+    "sleeping": "Кот спит"
+  },
+  "settings": {
+    "title": "Настройки Catwalk",
+    "minimumThreshold": {
+      "label": "Минимальный порог CPU",
+      "description": "Использование CPU должно быть выше этого процента, чтобы кот начал бежать"
+    },
+    "currentThreshold": "Текущий порог: {value}%"
+  },
+  "panel": {
+    "title": "Catwalk",
+    "cpuLabel": "CPU: {usage}%"
+  }
+}

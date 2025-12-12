@@ -1,0 +1,18 @@
+{
+  "tooltip": {
+    "running": "Le chat court",
+    "sleeping": "Le chat dort"
+  },
+  "settings": {
+    "title": "Paramètres Catwalk",
+    "minimumThreshold": {
+      "label": "Seuil minimum CPU",
+      "description": "L'utilisation du CPU doit être supérieure à ce pourcentage pour que le chat commence à courir"
+    },
+    "currentThreshold": "Seuil actuel : {value}%"
+  },
+  "panel": {
+    "title": "Catwalk",
+    "cpuLabel": "CPU : {usage}%"
+  }
+}

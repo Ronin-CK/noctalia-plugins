@@ -2,34 +2,48 @@
   "version": 1,
   "plugins": [
     {
+      "id": "catwalk",
+      "name": "Catwalk",
+      "version": "1.0.1",
+      "author": "MannuVilasara",
+      "description": "A cute animated cat for your bar.",
+      "repository": "https://github.com/noctalia-dev/noctalia-plugins",
+      "minNoctaliaVersion": "3.6.0",
+      "license": "MIT",
+      "lastUpdated": "2025-12-09T23:58:41+05:30"
+    },
+    {
       "id": "hello-world",
       "name": "Hello World",
-      "version": "1.0.0",
-      "author": "Noctalia Team",
+      "version": "1.0.1",
+      "author": "Noctalia Team <team@noctalia.dev>",
       "description": "A simple Hello World plugin demonstrating functionalities.",
       "repository": "https://github.com/noctalia-dev/noctalia-plugins",
       "minNoctaliaVersion": "3.6.0",
-      "license": "MIT"
+      "license": "MIT",
+      "lastUpdated": "2025-12-07T16:04:14+01:00"
     },
     {
       "id": "launcher-button",
       "name": "Launcher Button",
       "version": "1.0.0",
-      "author": "Noctalia Team",
+      "author": "Noctalia Team <team@noctalia.dev>",
       "description": "A simple button that opens the app launcher.",
       "repository": "https://github.com/noctalia-dev/noctalia-plugins",
       "minNoctaliaVersion": "3.6.0",
-      "license": "MIT"
+      "license": "MIT",
+      "lastUpdated": "2025-12-07T16:04:14+01:00"
     },
     {
       "id": "privacy-indicator",
       "name": "Privacy Indicator",
-      "version": "1.0.4",
-      "author": "Noctalia Team",
-      "description": "A privacy indicator widget that shows when microphone, camera, or screen sharing is active.",
+      "version": "1.0.8",
+      "author": "Noctalia Team <team@noctalia.dev>",
+      "description": "A privacy indicator widget that shows when microphone, camera or screen sharing is active.",
       "repository": "https://github.com/noctalia-dev/noctalia-plugins",
       "minNoctaliaVersion": "3.6.0",
-      "license": "MIT"
+      "license": "MIT",
+      "lastUpdated": "2025-12-09T13:33:20+01:00"
     }
   ]
 }

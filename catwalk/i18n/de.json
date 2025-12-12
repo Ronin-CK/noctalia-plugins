@@ -1,0 +1,18 @@
+{
+  "tooltip": {
+    "running": "Katze läuft",
+    "sleeping": "Katze schläft"
+  },
+  "settings": {
+    "title": "Catwalk-Einstellungen",
+    "minimumThreshold": {
+      "label": "Minimale CPU-Schwelle",
+      "description": "Die CPU-Auslastung muss über diesem Prozentsatz liegen, damit die Katze zu laufen beginnt"
+    },
+    "currentThreshold": "Aktuelle Schwelle: {value}%"
+  },
+  "panel": {
+    "title": "Catwalk",
+    "cpuLabel": "CPU: {usage}%"
+  }
+}
