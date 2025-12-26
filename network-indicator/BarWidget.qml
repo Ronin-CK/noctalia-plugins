@@ -43,6 +43,8 @@ Rectangle {
 
     color: root.useCustomColors && cfg.colorBackground || Style.capsuleColor
     radius: Style.radiusM
+    border.color: Style.capsuleBorderColor
+    border.width: Style.capsuleBorderWidth
 
     implicitWidth: barIsVertical ? Style.capsuleHeight : Math.max(contentRow.implicitWidth, minWidth)
     implicitHeight: barIsVertical ? Math.round(contentRow.implicitHeight + Style.marginM * 2) : Style.capsuleHeight
