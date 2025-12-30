@@ -2,13 +2,13 @@
   {
     "name": "yay",
     "cmdCheck": "command -v yay >/dev/null 2>&1",
-    "cmdGetNumUpdates": "yay -Sy >/dev/null 2>&1; yay -Quq 2>/dev/null | wc -l",
+    "cmdGetNumUpdates": "yay -Qu 2>/dev/null | wc -l",
     "cmdDoSystemUpdate": "yay -Syu"
   },
   {
     "name": "paru",
     "cmdCheck": "command -v paru >/dev/null 2>&1",
-    "cmdGetNumUpdates": "paru -Sy >/dev/null 2>&1; paru -Quq 2>/dev/null | wc -l",
+    "cmdGetNumUpdates": "paru -Qu 2>/dev/null | wc -l",
     "cmdDoSystemUpdate": "paru -Syu"
   },
   {
