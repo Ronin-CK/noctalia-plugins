@@ -154,9 +154,13 @@ Item {
             }
           }
 
-          NBox {
+          Rectangle {
             Layout.fillWidth: true
             Layout.fillHeight: true
+            color: Color.mSurfaceVariant
+            radius: Style.radiusM
+            border.color: Color.mOutline
+            border.width: 1
 
             ColumnLayout {
               anchors {
@@ -185,7 +189,8 @@ Item {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 clip: true
-
+                ScrollBar.vertical.policy: ScrollBar.AsNeeded
+                ScrollBar.vertical.visible: false
                 ListView {
                   id: todoListView
                   model: root.filteredTodosModel
@@ -244,78 +249,85 @@ Item {
                         elide: Text.ElideRight
                         Layout.fillWidth: true
                       }
-                      NIconButton {
-                        id: deleteButton
-                        icon: "circle-x"
-                        tooltipText: pluginApi?.tr("panel.todo_item.delete_button_tooltip")
-                        color: Color.mError
-                        implicitWidth: Style.baseWidgetSize * 0.8
-                        implicitHeight: Style.baseWidgetSize * 0.8
-                        radius: Style.radiusM
-                        opacity: model.completed ? 0.5 : 0.7
+                      Item {
+                        id: deleteButtonContainer
+                        implicitWidth: Style.baseWidgetSize * 0.6
+                        implicitHeight: Style.baseWidgetSize * 0.6
 
-                        states: [
-                          State {
-                            name: "hovered"
-                            when: deleteButton.hovering
-                            PropertyChanges {
-                              target: deleteButton
-                              opacity: 1.0
-                            }
-                          }
-                        ]
+                        NIcon {
+                          id: deleteButtonIcon
+                          anchors.centerIn: parent
+                          icon: "x"
+                          pointSize: Style.fontSizeS
+                          color: Color.mOnSurfaceVariant
+                          opacity: 0.3
 
-                        transitions: Transition {
-                          PropertyAnimation {
-                            properties: "opacity"
-                            duration: 150
-                          }
-                        }
+                          MouseArea {
+                            id: mouseArea
+                            anchors.fill: parent
+                            hoverEnabled: true
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                              // Directly modify the todos list through pluginApi
+                              if (pluginApi) {
+                                var todos = pluginApi.pluginSettings.todos || [];
+                                var indexToRemove = -1;
 
-                        onEntered: {
-                          deleteButton.opacity = 1.0;
-                        }
-
-                        onExited: {
-                          deleteButton.opacity = model.completed ? 0.5 : 0.7;
-                        }
-
-                        onClicked: {
-                          // Directly modify the todos list through pluginApi
-                          if (pluginApi) {
-                            var todos = pluginApi.pluginSettings.todos || [];
-                            var indexToRemove = -1;
-
-                            for (var i = 0; i < todos.length; i++) {
-                              if (todos[i].id === model.id) {
-                                indexToRemove = i;
-                                break;
-                              }
-                            }
-
-                            if (indexToRemove !== -1) {
-                              todos.splice(indexToRemove, 1);
-
-                              pluginApi.pluginSettings.todos = todos;
-                              pluginApi.pluginSettings.count = todos.length;
-
-                              // Recalculate completed count after removal
-                              var completedCount = 0;
-                              for (var j = 0; j < todos.length; j++) {
-                                if (todos[j].completed) {
-                                  completedCount++;
+                                for (var i = 0; i < todos.length; i++) {
+                                  if (todos[i].id === model.id) {
+                                    indexToRemove = i;
+                                    break;
+                                  }
                                 }
-                              }
-                              pluginApi.pluginSettings.completedCount = completedCount;
 
-                              pluginApi.saveSettings();
-                              loadTodos();
-                            } else {
-                              Logger.e("Todo", "Todo with ID " + model.id + " not found for deletion");
+                                if (indexToRemove !== -1) {
+                                  todos.splice(indexToRemove, 1);
+
+                                  pluginApi.pluginSettings.todos = todos;
+                                  pluginApi.pluginSettings.count = todos.length;
+
+                                  // Recalculate completed count after removal
+                                  var completedCount = 0;
+                                  for (var j = 0; j < todos.length; j++) {
+                                    if (todos[j].completed) {
+                                      completedCount++;
+                                    }
+                                  }
+                                  pluginApi.pluginSettings.completedCount = completedCount;
+
+                                  pluginApi.saveSettings();
+                                  loadTodos();
+                                } else {
+                                  Logger.e("Todo", "Todo with ID " + model.id + " not found for deletion");
+                                }
+                              } else {
+                                Logger.e("Todo", "pluginApi is null, cannot delete todo");
+                              }
                             }
-                          } else {
-                            Logger.e("Todo", "pluginApi is null, cannot delete todo");
                           }
+
+                          states: [
+                            State {
+                              name: "hovered"
+                              when: mouseArea.containsMouse
+                              PropertyChanges {
+                                target: deleteButtonIcon
+                                opacity: 1.0
+                                color: Color.mError
+                              }
+                            }
+                          ]
+
+                          transitions: [
+                            Transition {
+                              from: "*"; to: "hovered"
+                              NumberAnimation { properties: "opacity"; duration: 150 }
+                            },
+                            Transition {
+                              from: "hovered"; to: "*"
+                              NumberAnimation { properties: "opacity"; duration: 150 }
+                            }
+                          ]
                         }
                       }
                     }
