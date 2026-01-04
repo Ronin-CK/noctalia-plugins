@@ -45,7 +45,6 @@ Item {
     id: pill
 
     screen: root.screen
-    density: Settings.data.bar.density
     oppositeDirection: BarService.getPillDirection(root)
 
     // Dynamic Icon
