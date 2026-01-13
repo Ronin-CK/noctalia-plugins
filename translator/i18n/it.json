@@ -1,0 +1,35 @@
+{
+  "command": {
+    "description": "Traduci testo"
+  },
+  "languageNames": {
+    "french": "Francese",
+    "english": "Inglese",
+    "spanish": "Spagnolo",
+    "german": "Tedesco",
+    "italian": "Italiano",
+    "portuguese": "Portoghese"
+  },
+  "languages": {
+    "french": "Traduci in francese",
+    "english": "Traduci in inglese",
+    "spanish": "Traduci in spagnolo",
+    "german": "Traduci in tedesco",
+    "italian": "Traduci in italiano",
+    "portuguese": "Traduci in portoghese"
+  },
+  "messages": {
+    "enterText": "Digita il testo da tradurre...",
+    "targetLanguage": "Lingua di destinazione: {code}",
+    "translation": "Traduzione ({code})",
+    "translating": "Traduzione in corso...",
+    "error": "Errore di traduzione",
+    "connectionError": "Errore di connessione"
+  },
+  "settings": {
+    "backend": {
+      "label": "Servizio di traduzione",
+      "description": "Scegli il servizio di traduzione da utilizzare"
+    }
+  }
+}
