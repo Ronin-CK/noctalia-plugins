@@ -457,13 +457,6 @@ Item {
               Qt.callLater(function() {
                 BarService.openPluginSettings(screen, pluginApi.manifest);
               });
-            } else if (pluginApi && pluginApi.withCurrentScreen) {
-              pluginApi.withCurrentScreen(function(s) {
-                pluginApi.closePanel(s);
-                Qt.callLater(function() {
-                  BarService.openPluginSettings(s, pluginApi.manifest);
-                });
-              });
             }
           }
         }
