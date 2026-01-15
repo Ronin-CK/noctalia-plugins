@@ -46,6 +46,38 @@ You can use either the language code or the language name in English or French.
 
 - **Translation Backend**: Choose the translation service to use (currently supports Google Translate)
 
+## IPC Commands
+
+You can quickly open the translator via IPC, which is useful for keybindings:
+
+```bash
+# Toggle the translator launcher (opens with >translate )
+# Pass empty string "" to use default (no language pre-selected)
+qs -c noctalia-shell ipc call plugin:translator toggle ""
+
+# Open translator with a specific language (e.g., French)
+qs -c noctalia-shell ipc call plugin:translator toggle "fr"
+
+# You can use language codes or names (fr, french, français, etc.)
+qs -c noctalia-shell ipc call plugin:translator toggle "english"
+```
+
+### Integration with Keybindings
+
+Add this to your Noctalia keybinds configuration:
+
+```json
+{
+  "keybinds": {
+    "Super+T": "qs -c noctalia-shell ipc call plugin:translator toggle \"\"",
+    "Super+Shift+T": "qs -c noctalia-shell ipc call plugin:translator toggle \"fr\""
+  }
+}
+```
+
+- With empty string `""`: Opens the launcher with `>translate ` already entered, ready for you to select a language and type text to translate.
+- With a language parameter: Opens the launcher with `>translate [language] ` already entered, ready for you to type text to translate to that language.
+
 ## Requirements
 
 - Noctalia 1.0.0 or later
