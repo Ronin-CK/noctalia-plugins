@@ -22,6 +22,15 @@ Item {
         pluginApi.pluginSettings.count = 0;
         pluginApi.pluginSettings.completedCount = 0;
       }
+
+      // Ensure all existing todos have a pageId
+      var todos = pluginApi.pluginSettings.todos;
+      for (var i = 0; i < todos.length; i++) {
+        if (todos[i].pageId === undefined) {
+          todos[i].pageId = 0; // Assign to default page
+        }
+      }
+
       pluginApi.saveSettings();
     }
   }

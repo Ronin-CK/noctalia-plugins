@@ -270,12 +270,11 @@ Item {
                 checked: index === tabBar.currentIndex
 
                 Component.onCompleted: {
-                  isFirst = index === 0;
-                  isLast = index === ((pluginApi?.pluginSettings?.pages?.length || 1) - 1);
-                  topLeftRadius = isFirst ? Style.iRadiusM : Style.iRadiusXXXS;
-                  bottomLeftRadius = isFirst ? Style.iRadiusM : Style.iRadiusXXXS;
-                  topRightRadius = isLast ? Style.iRadiusM : Style.iRadiusXXXS;
-                  bottomRightRadius = isLast ? Style.iRadiusM : Style.iRadiusXXXS;
+                  // All tabs have rounded corners on both sides
+                  topLeftRadius = Style.iRadiusM;
+                  bottomLeftRadius = Style.iRadiusM;
+                  topRightRadius = Style.iRadiusM;
+                  bottomRightRadius = Style.iRadiusM;
                 }
 
                 onClicked: {
