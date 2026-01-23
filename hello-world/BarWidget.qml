@@ -15,16 +15,17 @@ Rectangle {
   property string widgetId: ""
   property string section: ""
 
-  implicitWidth: barIsVertical ? Style.barHeight : contentRow.implicitWidth + Style.marginL * 2
-  implicitHeight: Style.barHeight
-
   // Get message from settings or use manifest defaults
   readonly property string message: pluginApi?.pluginSettings?.message || pluginApi?.manifest?.metadata?.defaultSettings?.message || ""
   readonly property color bgColor: pluginApi?.pluginSettings?.backgroundColor || pluginApi?.manifest?.metadata?.defaultSettings?.backgroundColor || "transparent"
 
   // Bar positioning properties
-  readonly property string barPosition: Settings.data.bar.position || "top"
+  readonly property string barPosition: Settings.getBarPositionForScreen(screen.name)
   readonly property bool barIsVertical: barPosition === "left" || barPosition === "right"
+  readonly property real barHeight: Style.getBarHeightForScreen(screen?.name)
+
+  implicitWidth: barIsVertical ? root.barHeight : contentRow.implicitWidth + Style.marginL * 2
+  implicitHeight: root.barHeight
 
   color: bgColor
   radius: !barIsVertical ? Style.radiusM : width * 0.5
