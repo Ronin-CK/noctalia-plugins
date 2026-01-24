@@ -80,7 +80,7 @@ Rectangle {
       if (mainInstance && mainInstance.pomodoroMode === modeWork) return Color.mError
       return Color.mPrimary
     }
-    opacity: 0.15
+    opacity: 0.5
     radius: root.radius
 
     Behavior on width { NumberAnimation { duration: 1000 } }
