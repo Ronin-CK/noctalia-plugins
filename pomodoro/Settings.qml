@@ -64,7 +64,7 @@ ColumnLayout {
     Logger.i("Pomodoro", "Settings loaded: workDuration=" + root.editWorkDuration + 
              ", autoStartBreaks=" + root.editAutoStartBreaks +
              ", autoStartWork=" + root.editAutoStartWork +
-             ", compactMode=" + root.editCompactMode) +
+             ", compactMode=" + root.editCompactMode +
              ", playSound=" + root.editPlaySound +
              ", barFontSize=" + root.editBarFontSize)
   }
@@ -174,7 +174,7 @@ ColumnLayout {
   Item {
     Layout.fillWidth: true
     Layout.preferredHeight: autoStartBreaksToggle.implicitHeight
-    
+
     NToggle {
       id: autoStartBreaksToggle
       anchors.fill: parent
@@ -182,7 +182,7 @@ ColumnLayout {
       description: pluginApi?.tr("settings.auto-start-breaks-desc") || "Automatically start break timer after work session"
       checked: root.editAutoStartBreaks
     }
-    
+
     MouseArea {
       anchors.fill: parent
       cursorShape: Qt.PointingHandCursor
@@ -196,7 +196,7 @@ ColumnLayout {
   Item {
     Layout.fillWidth: true
     Layout.preferredHeight: autoStartWorkToggle.implicitHeight
-    
+
     NToggle {
       id: autoStartWorkToggle
       anchors.fill: parent
@@ -204,7 +204,7 @@ ColumnLayout {
       description: pluginApi?.tr("settings.auto-start-work-desc") || "Automatically start work timer after break"
       checked: root.editAutoStartWork
     }
-    
+
     MouseArea {
       anchors.fill: parent
       cursorShape: Qt.PointingHandCursor
@@ -218,7 +218,7 @@ ColumnLayout {
   Item {
     Layout.fillWidth: true
     Layout.preferredHeight: compactModeToggle.implicitHeight
-    
+
     NToggle {
       id: compactModeToggle
       anchors.fill: parent
@@ -226,7 +226,7 @@ ColumnLayout {
       description: pluginApi?.tr("settings.compact-mode-desc") || "Hide the circular progress bar for a cleaner look"
       checked: root.editCompactMode
     }
-    
+
     MouseArea {
       anchors.fill: parent
       cursorShape: Qt.PointingHandCursor
@@ -292,8 +292,8 @@ ColumnLayout {
              ", sessions=" + root.editSessionsBeforeLongBreak +
              ", autoStartBreaks=" + root.editAutoStartBreaks +
              ", autoStartWork=" + root.editAutoStartWork +
-             ", compactMode=" + root.editCompactMode) +
-    ", barFontSize=" + root.editBarFontSize +
-    ", playSound=" + root.editPlaySound)
+             ", compactMode=" + root.editCompactMode +
+             ", barFontSize=" + root.editBarFontSize +
+             ", playSound=" + root.editPlaySound)
   }
 }
