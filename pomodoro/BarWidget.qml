@@ -64,6 +64,28 @@ Rectangle {
     return "clock"
   }
 
+  // --- [NEW] Background Progress Bar Visualization ---
+  Rectangle {
+    id: progressBar
+    anchors.left: parent.left
+    anchors.top: parent.top
+    anchors.bottom: parent.bottom
+
+    width: {
+      if (!mainInstance || mainInstance.pomodoroTotalSeconds <= 0) return 0;
+      return root.width * (mainInstance.pomodoroRemainingSeconds / mainInstance.pomodoroTotalSeconds);
+    }
+
+    color: {
+      if (mainInstance && mainInstance.pomodoroMode === modeWork) return Color.mError
+      return Color.mPrimary
+    }
+    opacity: 0.15
+    radius: root.radius
+
+    Behavior on width { NumberAnimation { duration: 1000 } }
+  }
+
   RowLayout {
     id: contentRow
     anchors.centerIn: parent
@@ -71,10 +93,14 @@ Rectangle {
     layoutDirection: Qt.LeftToRight
 
     NIcon {
+      // --- [MODIFIED] Hide Icon when Timer is Running (Active) ---
+      visible: !isActive || barIsVertical
       icon: getModeIcon()
       applyUiScale: false
+      // --- [MODIFIED] Dynamic Icon Color ---
       color: {
          if (mainInstance && (mainInstance.pomodoroRunning || mainInstance.pomodoroSoundPlaying)) {
+            if (mainInstance.pomodoroMode === modeWork) return Color.mError
             return Color.mPrimary
          }
          return mouseArea.containsMouse ? Color.mOnHover : Color.mOnSurface
@@ -84,13 +110,18 @@ Rectangle {
     NText {
       visible: !barIsVertical && mainInstance && (mainInstance.pomodoroRunning || mainInstance.pomodoroRemainingSeconds > 0 || mainInstance.pomodoroTotalSeconds > 0)
       family: Settings.data.ui.fontFixed
-      pointSize: Style.barFontSize
+      
+      // --- [MODIFIED] Font Size from Settings ---
+      pointSize: pluginApi?.pluginSettings?.barFontSize ?? Style.barFontSize ?? 12
+      
       text: {
         if (!mainInstance) return ""
         return formatTime(mainInstance.pomodoroRemainingSeconds)
       }
+      // --- [MODIFIED] Dynamic Text Color ---
       color: {
          if (mainInstance && (mainInstance.pomodoroRunning || mainInstance.pomodoroSoundPlaying)) {
+            if (mainInstance.pomodoroMode === modeWork) return Color.mError
             return Color.mPrimary
          }
          return mouseArea.containsMouse ? Color.mOnHover : Color.mOnSurface
