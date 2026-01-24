@@ -43,7 +43,8 @@ Item {
               pluginApi.pluginSettings.autoStartWork = newSettings.autoStartWork;
             if (newSettings.compactMode !== undefined)
               pluginApi.pluginSettings.compactMode = newSettings.compactMode;
-            
+              
+            // Trigger update
             root.settingsVersion++;
             
             Logger.i("Pomodoro", "Settings reloaded from file");
@@ -158,11 +159,23 @@ Item {
     }
   }
 
-  function pomodoroStart() {
-    // Stop any playing alarm sound when starting
-    if (root.pomodoroSoundPlaying) {
+  // --- NEW: Alarm Limit Timer ---
+  Timer {
+    id: alarmLimitTimer
+    interval: 5000 // 5 seconds
+    repeat: false
+    running: false
+    onTriggered: {
+       root.pomodoroStopAlarm();
+    }
+  }
+
+  function pomodoroStart(stopSound = true) {
+    // Stop any playing alarm sound when starting, unless explicitly asked not to (for auto-start)
+    if (stopSound && root.pomodoroSoundPlaying) {
       SoundService.stopSound(root.alarmSoundFile); // Uses variable
       root.pomodoroSoundPlaying = false;
+      alarmLimitTimer.stop();
     }
     
     if (root.pomodoroRemainingSeconds <= 0) {
@@ -180,6 +193,7 @@ Item {
     root.pomodoroRunning = false;
     SoundService.stopSound(root.alarmSoundFile); // Uses variable
     root.pomodoroSoundPlaying = false;
+    alarmLimitTimer.stop();
   }
 
   function pomodoroResetSession() {
@@ -187,9 +201,9 @@ Item {
     root.pomodoroRemainingSeconds = getDurationForMode(root.pomodoroMode);
     root.pomodoroTotalSeconds = 0;
     root.pomodoroOriginalTotal = 0;
-
     SoundService.stopSound(root.alarmSoundFile); // Uses variable
     root.pomodoroSoundPlaying = false;
+    alarmLimitTimer.stop();
   }
 
   function pomodoroResetAll() {
@@ -202,12 +216,14 @@ Item {
 
     SoundService.stopSound(root.alarmSoundFile); // Uses variable
     root.pomodoroSoundPlaying = false;
+    alarmLimitTimer.stop();
   }
 
   function pomodoroSkip() {
     root.pomodoroRunning = false;
     SoundService.stopSound(root.alarmSoundFile); // Uses variable
     root.pomodoroSoundPlaying = false;
+    alarmLimitTimer.stop();
     
     pomodoroAdvanceToNextPhase();
   }
@@ -216,6 +232,7 @@ Item {
     if (root.pomodoroSoundPlaying) {
       SoundService.stopSound(root.alarmSoundFile); // Uses variable
       root.pomodoroSoundPlaying = false;
+      alarmLimitTimer.stop();
     }
   }
 
@@ -260,6 +277,8 @@ Item {
         repeat: true,
         volume: 0.3 
       });
+      // Start the alarm limit timer
+      alarmLimitTimer.start();
     }
 
     var toastMessage;
@@ -286,9 +305,8 @@ Item {
     
     if (shouldAutoStart) {
       Qt.callLater(() => {
-        SoundService.stopSound(root.alarmSoundFile); // Uses variable
-        root.pomodoroSoundPlaying = false;
-        root.pomodoroStart();
+        // Pass false to keep sound playing!
+        root.pomodoroStart(false);
       });
     }
   }
