@@ -12,10 +12,10 @@ ColumnLayout {
   property int editLongBreakDuration: 15
   property int editSessionsBeforeLongBreak: 4
 
-  // New property for Font Size
+
   property int editBarFontSize: 12
   
-  // --- NEW: Sound Property ---
+  // --- : Sound Property ---
   property bool editPlaySound: true
 
   property bool editAutoStartBreaks: false
@@ -53,7 +53,7 @@ ColumnLayout {
     root.editAutoStartWork = settings?.autoStartWork ?? defaults?.autoStartWork ?? false
     root.editCompactMode = settings?.compactMode ?? defaults?.compactMode ?? false
     
-    // --- NEW: Load Sound Setting ---
+    // --- : Load Sound Setting ---
     root.editPlaySound = settings?.playSound ?? defaults?.playSound ?? true
 
     autoStartBreaksToggle.checked = root.editAutoStartBreaks
@@ -145,7 +145,7 @@ ColumnLayout {
     }
   }
 
-  // --- NEW SETTING: Font Size ---
+  // ---  SETTING: Font Size ---
   ColumnLayout {
     Layout.fillWidth: true
     spacing: Style.marginS
@@ -237,7 +237,7 @@ ColumnLayout {
     }
   }
 
-  // --- NEW: Play Sound Toggle ---
+  // --- : Play Sound Toggle ---
   Item {
     Layout.fillWidth: true
     Layout.preferredHeight: playSoundToggle.implicitHeight
@@ -277,7 +277,7 @@ ColumnLayout {
     // Save font size
     pluginApi.pluginSettings.barFontSize = root.editBarFontSize
     
-    // --- NEW: Save Sound Setting ---
+    // --- : Save Sound Setting ---
     pluginApi.pluginSettings.playSound = root.editPlaySound
 
     pluginApi.saveSettings()
