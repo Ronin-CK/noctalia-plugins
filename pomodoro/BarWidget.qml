@@ -35,6 +35,7 @@ Rectangle {
   readonly property string barPosition: Settings.data.bar.position || "top"
   readonly property bool barIsVertical: barPosition === "left" || barPosition === "right"
 
+
   color: {
   if (mouseArea.containsMouse &&
       (!mainInstance || (!mainInstance.pomodoroRunning && !mainInstance.pomodoroSoundPlaying)))
@@ -64,7 +65,7 @@ Rectangle {
     return "clock"
   }
 
-  // --- [NEW] Background Progress Bar Visualization ---
+  // ---   Background Progress Bar Visualization ---
   Rectangle {
     id: progressBar
     anchors.left: parent.left
@@ -93,11 +94,11 @@ Rectangle {
     layoutDirection: Qt.LeftToRight
 
     NIcon {
-      // --- [MODIFIED] Hide Icon when Timer is Running (Active) ---
+      // ---  - Hide Icon when Timer is Running (Active) ---
       visible: !isActive || barIsVertical
       icon: getModeIcon()
       applyUiScale: false
-      // --- [MODIFIED] Dynamic Icon Color ---
+      // ---  - Dynamic Icon Color ---
       color: {
          if (mainInstance && (mainInstance.pomodoroRunning || mainInstance.pomodoroSoundPlaying)) {
             if (mainInstance.pomodoroMode === modeWork) return Color.mError
@@ -111,14 +112,14 @@ Rectangle {
       visible: !barIsVertical && mainInstance && (mainInstance.pomodoroRunning || mainInstance.pomodoroRemainingSeconds > 0 || mainInstance.pomodoroTotalSeconds > 0)
       family: Settings.data.ui.fontFixed
       
-      // --- [MODIFIED] Font Size from Settings ---
+      // ---  - Font Size from Settings ---
       pointSize: pluginApi?.pluginSettings?.barFontSize ?? Style.barFontSize ?? 12
       
       text: {
         if (!mainInstance) return ""
         return formatTime(mainInstance.pomodoroRemainingSeconds)
       }
-      // --- [MODIFIED] Dynamic Text Color ---
+      // ---  - Dynamic Text Color ---
       color: {
          if (mainInstance && (mainInstance.pomodoroRunning || mainInstance.pomodoroSoundPlaying)) {
             if (mainInstance.pomodoroMode === modeWork) return Color.mError
