@@ -159,7 +159,7 @@ Item {
     }
   }
 
-  // --- NEW: Alarm Limit Timer ---
+  // ---  Alarm Limit Timer ---
   Timer {
     id: alarmLimitTimer
     interval: 5000 // 5 seconds
