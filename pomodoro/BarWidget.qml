@@ -6,7 +6,7 @@ import qs.Widgets
 import qs.Services.UI
 import qs.Services.System
 
-Rectangle {
+Item {
   id: root
 
   property var pluginApi: null
@@ -25,25 +25,18 @@ Rectangle {
   readonly property int modeShortBreak: 1
   readonly property int modeLongBreak: 2
 
-  implicitWidth: {
+  readonly property string barPosition: Settings.data.bar.position || "top"
+  readonly property bool barIsVertical: barPosition === "left" || barPosition === "right"
+
+  readonly property real contentWidth: {
     if (barIsVertical) return Style.capsuleHeight
     if (isActive) return contentRow.implicitWidth + Style.marginM * 2
     return Style.capsuleHeight
   }
-  implicitHeight: Style.capsuleHeight
+  readonly property real contentHeight: Style.capsuleHeight
 
-  readonly property string barPosition: Settings.data.bar.position || "top"
-  readonly property bool barIsVertical: barPosition === "left" || barPosition === "right"
-
-
-  color: {
-  if (mouseArea.containsMouse &&
-      (!mainInstance || (!mainInstance.pomodoroRunning && !mainInstance.pomodoroSoundPlaying)))
-    return Color.mHover
-  return Style.capsuleColor
-  }
-
-  radius: Style.radiusL
+  implicitWidth: contentWidth
+  implicitHeight: contentHeight
 
   function formatTime(seconds) {
     const hours = Math.floor(seconds / 3600);
@@ -65,67 +58,76 @@ Rectangle {
     return "clock"
   }
 
-  // ---   Background Progress Bar Visualization ---
   Rectangle {
-    id: progressBar
-    anchors.left: parent.left
-    anchors.top: parent.top
-    anchors.bottom: parent.bottom
-
-    width: {
-      if (!mainInstance || mainInstance.pomodoroTotalSeconds <= 0) return 0;
-      return root.width * (mainInstance.pomodoroRemainingSeconds / mainInstance.pomodoroTotalSeconds);
-    }
-
+    id: visualCapsule
+    x: Style.pixelAlignCenter(parent.width, width)
+    y: Style.pixelAlignCenter(parent.height, height)
+    width: root.contentWidth
+    height: root.contentHeight
     color: {
-      if (mainInstance && mainInstance.pomodoroMode === modeWork) return Color.mPrimary
-      return Color.mSecondary
+      if (mouseArea.containsMouse &&
+          (!mainInstance || (!mainInstance.pomodoroRunning && !mainInstance.pomodoroSoundPlaying)))
+        return Color.mHover
+      return Style.capsuleColor
     }
-    opacity: 0.5
-    radius: root.radius
+    radius: Style.radiusL
 
-    Behavior on width { NumberAnimation { duration: 1000 } }
-  }
+    // Background Progress Bar Visualization
+    Rectangle {
+      id: progressBar
+      anchors.left: parent.left
+      anchors.top: parent.top
+      anchors.bottom: parent.bottom
 
-  RowLayout {
-    id: contentRow
-    anchors.centerIn: parent
-    spacing: Style.marginS
-    layoutDirection: Qt.LeftToRight
+      width: {
+        if (!mainInstance || mainInstance.pomodoroTotalSeconds <= 0) return 0;
+        return parent.width * (mainInstance.pomodoroRemainingSeconds / mainInstance.pomodoroTotalSeconds);
+      }
 
-    NIcon {
-      // ---  - Hide Icon when Timer is Running (Active) ---
-      visible: !isActive || barIsVertical
-      icon: getModeIcon()
-      applyUiScale: false
-      // ---  - Dynamic Icon Color ---
       color: {
-         if (mainInstance && (mainInstance.pomodoroRunning || mainInstance.pomodoroSoundPlaying)) {
+        if (mainInstance && mainInstance.pomodoroMode === modeWork) return Color.mPrimary
+        return Color.mSecondary
+      }
+      opacity: 0.5
+      radius: parent.radius
+
+      Behavior on width { NumberAnimation { duration: 1000 } }
+    }
+
+    RowLayout {
+      id: contentRow
+      anchors.centerIn: parent
+      spacing: Style.marginS
+      layoutDirection: Qt.LeftToRight
+
+      NIcon {
+        visible: !isActive || barIsVertical
+        icon: getModeIcon()
+        applyUiScale: false
+        color: {
+          if (mainInstance && (mainInstance.pomodoroRunning || mainInstance.pomodoroSoundPlaying)) {
             if (mainInstance.pomodoroMode === modeWork) return Color.mPrimary
             return Color.mSecondary
-         }
-         return mouseArea.containsMouse ? Color.mOnHover : Color.mOnSurface
+          }
+          return mouseArea.containsMouse ? Color.mOnHover : Color.mOnSurface
+        }
       }
-    }
 
-    NText {
-      visible: !barIsVertical && mainInstance && (mainInstance.pomodoroRunning || mainInstance.pomodoroRemainingSeconds > 0 || mainInstance.pomodoroTotalSeconds > 0)
-      family: Settings.data.ui.fontFixed
-      
-      // ---  - Font Size from Settings ---
-      pointSize: pluginApi?.pluginSettings?.barFontSize ?? Style.barFontSize ?? 12
-      
-      text: {
-        if (!mainInstance) return ""
-        return formatTime(mainInstance.pomodoroRemainingSeconds)
-      }
-      // ---  - Dynamic Text Color ---
-      color: {
-         if (mainInstance && (mainInstance.pomodoroRunning || mainInstance.pomodoroSoundPlaying)) {
+      NText {
+        visible: !barIsVertical && mainInstance && (mainInstance.pomodoroRunning || mainInstance.pomodoroRemainingSeconds > 0 || mainInstance.pomodoroTotalSeconds > 0)
+        family: Settings.data.ui.fontFixed
+        pointSize: pluginApi?.pluginSettings?.barFontSize ?? Style.barFontSize ?? 12
+        text: {
+          if (!mainInstance) return ""
+          return formatTime(mainInstance.pomodoroRemainingSeconds)
+        }
+        color: {
+          if (mainInstance && (mainInstance.pomodoroRunning || mainInstance.pomodoroSoundPlaying)) {
             if (mainInstance.pomodoroMode === modeWork) return Color.mPrimary
             return Color.mSecondary
-         }
-         return mouseArea.containsMouse ? Color.mOnHover : Color.mOnSurface
+          }
+          return mouseArea.containsMouse ? Color.mOnHover : Color.mOnSurface
+        }
       }
     }
   }
@@ -134,43 +136,43 @@ Rectangle {
     id: contextMenu
 
     model: {
-        var items = [];
+      var items = [];
 
-        if (mainInstance) {
-            if (mainInstance.pomodoroRunning || mainInstance.pomodoroRemainingSeconds > 0 || mainInstance.pomodoroTotalSeconds > 0) {
-                 items.push({
-                    "label": mainInstance.pomodoroRunning ? pluginApi.tr("panel.pause") : pluginApi.tr("panel.resume"),
-                    "action": "toggle",
-                    "icon": mainInstance.pomodoroRunning ? "media-pause" : "media-play"
-                });
+      if (mainInstance) {
+        if (mainInstance.pomodoroRunning || mainInstance.pomodoroRemainingSeconds > 0 || mainInstance.pomodoroTotalSeconds > 0) {
+          items.push({
+            "label": mainInstance.pomodoroRunning ? pluginApi.tr("panel.pause") : pluginApi.tr("panel.resume"),
+            "action": "toggle",
+            "icon": mainInstance.pomodoroRunning ? "media-pause" : "media-play"
+          });
 
-                items.push({
-                    "label": pluginApi.tr("panel.skip"),
-                    "action": "skip",
-                    "icon": "player-skip-forward"
-                });
+          items.push({
+            "label": pluginApi.tr("panel.skip"),
+            "action": "skip",
+            "icon": "player-skip-forward"
+          });
 
-                items.push({
-                    "label": pluginApi.tr("panel.reset"),
-                    "action": "reset",
-                    "icon": "refresh"
-                });
+          items.push({
+            "label": pluginApi.tr("panel.reset"),
+            "action": "reset",
+            "icon": "refresh"
+          });
 
-                items.push({
-                    "label": pluginApi.tr("panel.reset-all"),
-                    "action": "reset-all",
-                    "icon": "rotate"
-                });
-            }
+          items.push({
+            "label": pluginApi.tr("panel.reset-all"),
+            "action": "reset-all",
+            "icon": "rotate"
+          });
         }
+      }
 
-        items.push({
-            "label": pluginApi.tr("panel.settings"),
-            "action": "widget-settings",
-            "icon": "settings"
-        });
+      items.push({
+        "label": pluginApi.tr("panel.settings"),
+        "action": "widget-settings",
+        "icon": "settings"
+      });
 
-        return items;
+      return items;
     }
 
     onTriggered: action => {
@@ -179,23 +181,23 @@ Rectangle {
             popupMenuWindow.close();
         }
 
-        if (action === "widget-settings") {
-            BarService.openPluginSettings(screen, pluginApi.manifest);
-        } else if (mainInstance) {
-            if (action === "toggle") {
-                 if (mainInstance.pomodoroRunning) {
-                    mainInstance.pomodoroPause();
-                } else {
-                    mainInstance.pomodoroStart();
-                }
-            } else if (action === "reset") {
-                mainInstance.pomodoroResetSession();
-            } else if (action === "reset-all") {
-                mainInstance.pomodoroResetAll();
-            } else if (action === "skip") {
-                mainInstance.pomodoroSkip();
-            }
+      if (action === "widget-settings") {
+        BarService.openPluginSettings(screen, pluginApi.manifest);
+      } else if (mainInstance) {
+        if (action === "toggle") {
+          if (mainInstance.pomodoroRunning) {
+            mainInstance.pomodoroPause();
+          } else {
+            mainInstance.pomodoroStart();
+          }
+        } else if (action === "reset") {
+          mainInstance.pomodoroResetSession();
+        } else if (action === "reset-all") {
+          mainInstance.pomodoroResetAll();
+        } else if (action === "skip") {
+          mainInstance.pomodoroSkip();
         }
+      }
     }
   }
 
@@ -208,9 +210,9 @@ Rectangle {
 
     onClicked: (mouse) => {
       if (mouse.button === Qt.LeftButton) {
-          if (pluginApi) {
-            pluginApi.openPanel(root.screen, root)
-          }
+        if (pluginApi) {
+          pluginApi.openPanel(root.screen, root)
+        }
       } else if (mouse.button === Qt.RightButton) {
           var popupMenuWindow = PanelService.getPopupMenuWindow(screen);
           if (popupMenuWindow) {
@@ -218,12 +220,12 @@ Rectangle {
               contextMenu.openAtItem(root, screen);
           }
       } else if (mouse.button === Qt.MiddleButton) {
-          if (!mainInstance)
-            return
-          mainInstance.pomodoroRunning
-            ? mainInstance.pomodoroPause()
-            : mainInstance.pomodoroStart()
-        }
+        if (!mainInstance)
+          return
+        mainInstance.pomodoroRunning
+          ? mainInstance.pomodoroPause()
+          : mainInstance.pomodoroStart()
+      }
     }
   }
 }
