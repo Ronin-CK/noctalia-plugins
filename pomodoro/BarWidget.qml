@@ -78,8 +78,8 @@ Rectangle {
     }
 
     color: {
-      if (mainInstance && mainInstance.pomodoroMode === modeWork) return Color.mError
-      return Color.mPrimary
+      if (mainInstance && mainInstance.pomodoroMode === modeWork) return Color.mPrimary
+      return Color.mSecondary
     }
     opacity: 0.5
     radius: root.radius
@@ -101,8 +101,8 @@ Rectangle {
       // ---  - Dynamic Icon Color ---
       color: {
          if (mainInstance && (mainInstance.pomodoroRunning || mainInstance.pomodoroSoundPlaying)) {
-            if (mainInstance.pomodoroMode === modeWork) return Color.mError
-            return Color.mPrimary
+            if (mainInstance.pomodoroMode === modeWork) return Color.mPrimary
+            return Color.mSecondary
          }
          return mouseArea.containsMouse ? Color.mOnHover : Color.mOnSurface
       }
@@ -122,8 +122,8 @@ Rectangle {
       // ---  - Dynamic Text Color ---
       color: {
          if (mainInstance && (mainInstance.pomodoroRunning || mainInstance.pomodoroSoundPlaying)) {
-            if (mainInstance.pomodoroMode === modeWork) return Color.mError
-            return Color.mPrimary
+            if (mainInstance.pomodoroMode === modeWork) return Color.mPrimary
+            return Color.mSecondary
          }
          return mouseArea.containsMouse ? Color.mOnHover : Color.mOnSurface
       }
