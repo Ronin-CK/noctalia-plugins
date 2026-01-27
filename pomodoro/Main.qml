@@ -9,7 +9,7 @@ Item {
   id: root
 
   // --- CONFIGURATION: Change sound here ---
-  readonly property string alarmSoundFile: Qt.resolvedUrl("keylimba_soft.mp3").toString().replace("file://", "")
+  readonly property string alarmSoundFile: Qt.resolvedUrl("Alarm.mp3").toString().replace("file://", "")
 
   property var pluginApi: null
 
