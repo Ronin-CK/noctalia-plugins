@@ -1,7 +1,7 @@
 {
   "id": "pomodoro",
   "name": "Pomodoro",
-  "version": "1.1.4",
+  "version": "1.2.5",
   "minNoctaliaVersion": "4.0.0",
   "author": "notprayasmitra",
   "license": "MIT",
@@ -28,7 +28,9 @@
       "sessionsBeforeLongBreak": 4,
       "autoStartBreaks": false,
       "autoStartWork": false,
-      "compactMode": false
+      "compactMode": false,
+      "barFontSize": 12,
+      "playSound": true
     }
   }
 }
