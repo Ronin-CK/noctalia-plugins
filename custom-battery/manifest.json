@@ -1,13 +1,13 @@
 {
     "id": "custom-battery",
-    "name": "CustomBattery",
+    "name": "Custom Battery",
     "version": "1.0.0",
     "minNoctaliaVersion": "4.0.0",
     "author": "ronin ck",
     "license": "MIT",
-    "official": false,
+
     "repository": "https://github.com/noctalia-dev/noctalia-plugins",
-    "description": "Android 16 Battery Plugin",
+    "description": "A custom battery icon.",
     "tags": [
         "Bar",
         "System"
