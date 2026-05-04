@@ -143,7 +143,6 @@ Item {
       text: root.text + root.suffix
       family: Settings.data.ui.fontFixed
       pointSize: root.barFontSize
-      applyUiScale: false
       color: root.fgColor
       visible: revealed && !root.textInsideIcon
     }
@@ -183,7 +182,6 @@ Item {
       icon: root.icon
       visible: root.iconSource === "" && root.icon !== ""
       pointSize: iconSize
-      applyUiScale: false
       color: root.fgColor
       x: (iconCircle.width - width) / 2
       y: (iconCircle.height - height) / 2 + (height - contentHeight) / 2
@@ -298,7 +296,6 @@ Item {
       family: "Google Sans"
       font.weight: Font.Bold
       font.pixelSize: Math.round(15 * svgContainer.scaleFactor)
-      applyUiScale: false
       color: root.textInsideIcon ? (Settings.data.colorSchemes.darkMode ? "#000000" : "#FFFFFF") : ((root.customIconColor.a > 0 && (root.customIconColor.r + root.customIconColor.g + root.customIconColor.b) > 1.5) ? "#000000" : "#FFFFFF")
       opacity: 0.75
       visible: root.textInsideIcon
