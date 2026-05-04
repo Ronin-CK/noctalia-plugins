@@ -53,9 +53,35 @@ Item {
 
     Component {
       id: verticalPillComponent
-      Item {
-        implicitWidth: 0
-        implicitHeight: 0
+      BarPillHorizontal {
+        screen: root.screen
+        icon: root.icon
+        iconSource: root.iconSource
+        text: root.text
+        suffix: root.suffix
+        tooltipText: root.tooltipText
+        autoHide: root.autoHide
+        forceOpen: false
+        forceClose: true
+        oppositeDirection: root.oppositeDirection
+        hovered: root.hovered
+        customBackgroundColor: root.customBackgroundColor
+        customTextIconColor: root.customTextIconColor
+        customIconColor: root.customIconColor
+        textInsideIcon: root.textInsideIcon
+        transparentBackground: root.transparentBackground
+        charging: root.charging
+        isPowerSaver: root.isPowerSaver
+        isVertical: root.isVerticalBar
+
+        onShown: root.shown()
+        onHidden: root.hidden()
+        onEntered: root.entered()
+        onExited: root.exited()
+        onClicked: root.clicked()
+        onRightClicked: root.rightClicked()
+        onMiddleClicked: root.middleClicked()
+        onWheel: delta => root.wheel(delta)
       }
     }
 
@@ -80,6 +106,7 @@ Item {
         transparentBackground: root.transparentBackground
         charging: root.charging
         isPowerSaver: root.isPowerSaver
+        isVertical: root.isVerticalBar
 
         onShown: root.shown()
         onHidden: root.hidden()
