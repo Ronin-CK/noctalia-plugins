@@ -19,20 +19,20 @@ ColumnLayout {
 
     // Title
     NLabel {
-        label: pluginApi?.tr("settings.title") ?? "Battery Icon Settings"
-        description: pluginApi?.tr("settings.description") ?? "Customize the appearance and behavior of the battery icon."
+        label: pluginApi?.tr("settings.title")
+        description: pluginApi?.tr("settings.description")
         Layout.fillWidth: true
     }
 
     // Display Mode
     NValueSelector {
         Layout.fillWidth: true
-        label: pluginApi?.tr("settings.display_mode_label") ?? "Display Mode"
-        description: pluginApi?.tr("settings.display_mode_desc") ?? "How to show the battery information."
+        label: pluginApi?.tr("settings.display_mode_label")
+        description: pluginApi?.tr("settings.display_mode_desc")
         model: [
-            { "label": pluginApi?.tr("settings.mode_icon_text") ?? "Icon + Percentage", "value": "icon-text" },
-            { "label": pluginApi?.tr("settings.mode_always_show") ?? "Always Show Pill", "value": "alwaysShow" },
-            { "label": pluginApi?.tr("settings.mode_icon_only") ?? "Icon Only", "value": "icon-only" }
+            { "label": pluginApi?.tr("settings.mode_icon_text"), "value": "icon-text" },
+            { "label": pluginApi?.tr("settings.mode_always_show"), "value": "alwaysShow" },
+            { "label": pluginApi?.tr("settings.mode_icon_only"), "value": "icon-only" }
         ]
         value: root.displayMode
         onSelected: value => {
@@ -44,8 +44,8 @@ ColumnLayout {
     // Device Selection
     NValueSelector {
         Layout.fillWidth: true
-        label: pluginApi?.tr("settings.device_label") ?? "Battery Device"
-        description: pluginApi?.tr("settings.device_desc") ?? "Select which device to monitor."
+        label: pluginApi?.tr("settings.device_label")
+        description: pluginApi?.tr("settings.device_desc")
         model: BatteryService.deviceModel.map(d => ({ "label": d.name, "value": d.key }))
         value: root.deviceNativePath
         onSelected: value => {
@@ -57,8 +57,8 @@ ColumnLayout {
     // Visibility Toggles
     NValueSwitch {
         Layout.fillWidth: true
-        label: pluginApi?.tr("settings.hide_idle_label") ?? "Hide if Idle"
-        description: pluginApi?.tr("settings.hide_idle_desc") ?? "Hide the icon when fully charged and plugged in."
+        label: pluginApi?.tr("settings.hide_idle_label")
+        description: pluginApi?.tr("settings.hide_idle_desc")
         checked: root.hideIfIdle
         onToggled: {
             root.hideIfIdle = checked;
@@ -68,8 +68,8 @@ ColumnLayout {
 
     NValueSwitch {
         Layout.fillWidth: true
-        label: pluginApi?.tr("settings.hide_missing_label") ?? "Hide if Not Detected"
-        description: pluginApi?.tr("settings.hide_missing_desc") ?? "Hide the icon if no battery device is found."
+        label: pluginApi?.tr("settings.hide_missing_label")
+        description: pluginApi?.tr("settings.hide_missing_desc")
         checked: root.hideIfNotDetected
         onToggled: {
             root.hideIfNotDetected = checked;
@@ -80,8 +80,8 @@ ColumnLayout {
     // Scale Slider
     NValueSlider {
         Layout.fillWidth: true
-        label: pluginApi?.tr("settings.scale_label") ?? "Icon Scale"
-        description: pluginApi?.tr("settings.scale_desc") ?? "Adjust the size of the battery icon relative to the pill."
+        label: pluginApi?.tr("settings.scale_label")
+        description: pluginApi?.tr("settings.scale_desc")
         from: 0.5
         to: 1.5
         stepSize: 0.05
