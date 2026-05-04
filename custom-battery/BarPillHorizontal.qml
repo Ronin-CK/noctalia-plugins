@@ -291,7 +291,8 @@ Item {
     
     NText {
       anchors.centerIn: svgContainer
-      anchors.verticalCenterOffset: Math.max(1, Math.round(1 * svgContainer.scaleFactor))
+      anchors.horizontalCenterOffset: -Math.round((root.text.length > 2 ? 2.5 : 1.5) * svgContainer.scaleFactor)
+      anchors.verticalCenterOffset: Math.round(1.5 * svgContainer.scaleFactor)
       text: root.text
       family: "Google Sans"
       font.weight: Font.Bold
