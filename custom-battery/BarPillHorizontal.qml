@@ -28,6 +28,7 @@ Item {
   property bool transparentBackground: false
   property bool charging: false
   property bool isPowerSaver: false
+  property bool isVertical: false
 
   readonly property bool collapseToIcon: forceClose && !forceOpen
 
@@ -73,8 +74,8 @@ Item {
   }
 
   anchors.fill: parent
-  implicitWidth: contentWidth
-  implicitHeight: pillHeight
+  implicitWidth: root.isVertical ? pillHeight : contentWidth
+  implicitHeight: root.isVertical ? baseIconWidth : pillHeight
 
   Connections {
     target: root
@@ -87,11 +88,11 @@ Item {
 
   Rectangle {
     id: pillBackground
-    width: collapseToIcon ? baseIconWidth : root.width
-    height: pillHeight
+    width: root.isVertical ? root.pillHeight : (collapseToIcon ? baseIconWidth : root.width)
+    height: root.isVertical ? baseIconWidth : pillHeight
     radius: Style.radiusM
     color: root.bgColor
-    anchors.verticalCenter: parent.verticalCenter
+    anchors.centerIn: parent
     border.color: Style.capsuleBorderColor
     border.width: 0
 
@@ -165,13 +166,15 @@ Item {
 
   Rectangle {
     id: iconCircle
-    width: hasIcon ? (root.iconSource !== "" ? svgContainer.width : pillHeight) : 0
-    height: pillHeight
+    width: root.isVertical ? pillHeight : (hasIcon ? (root.iconSource !== "" ? svgContainer.width : pillHeight) : 0)
+    height: root.isVertical ? (hasIcon ? (root.iconSource !== "" ? svgContainer.width : pillHeight) : 0) : pillHeight
     radius: Math.min(Style.radiusL, width / 2)
     color: "transparent" // Make icon background transparent to avoid double opacity
-    anchors.verticalCenter: parent.verticalCenter
-    
+    anchors.centerIn: parent
+    rotation: root.isVertical ? -90 : 0
+
     x: {
+        if (root.isVertical) return (parent.width - width) / 2;
         if (root.textInsideIcon || (!showPill && !forceOpen)) {
             return (parent.width - width) / 2;
         }
