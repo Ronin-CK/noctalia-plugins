@@ -270,8 +270,8 @@ Item {
         
         anchors.left: svgContainer.left
         anchors.leftMargin: root.isPowerSaver
-            ? Math.round(25 * scaleFactor)
-            : Math.round(31 * scaleFactor) - Math.round(width * 0.2)
+            ? Math.round(23 * scaleFactor)
+            : Math.round(29 * scaleFactor) - Math.round(width * 0.2)
         anchors.verticalCenter: parent.verticalCenter
         z: 10
         fillMode: Image.PreserveAspectFit
