@@ -272,9 +272,9 @@ Item {
         height: root.isPowerSaver ? Math.round(14 * scaleFactor) : Math.round(13 * scaleFactor)
         
         anchors.left: svgContainer.left
-        anchors.leftMargin: root.isPowerSaver
+        anchors.leftMargin: (root.isPowerSaver
             ? Math.round(23 * scaleFactor)
-            : Math.round(29 * scaleFactor) - Math.round(width * 0.2)
+            : Math.round(29 * scaleFactor) - Math.round(width * 0.2)) + 1
         anchors.verticalCenter: parent.verticalCenter
         z: 10
         fillMode: Image.PreserveAspectFit
@@ -295,7 +295,7 @@ Item {
     NText {
       anchors.centerIn: svgContainer
       anchors.horizontalCenterOffset: -Math.round((root.text.length > 2 ? 3.5 : 2.5) * svgContainer.scaleFactor)
-      anchors.verticalCenterOffset: Math.round(1.5 * svgContainer.scaleFactor)
+      anchors.verticalCenterOffset: Math.round(1.5 * svgContainer.scaleFactor) - 1
       text: root.text
       family: "Google Sans"
       font.weight: Font.Bold
